@@ -26,4 +26,4 @@ services:
     volumes:
     - ./database/bdteste.sql:/docker-entrypoint-initdb.d/bdteste.sql
     ports:
-      - "3306:3306"
+      - "3307:3306"
