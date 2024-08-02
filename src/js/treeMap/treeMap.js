@@ -5,7 +5,6 @@ function loadChart() {
         $('.x-loader').fadeOut();
 
         if (response.status == 'success') {
-            console.log(response.data);
             drawTreeMap(response.data);
         } 
 
@@ -58,23 +57,12 @@ function drawTreeMap(data) {
                 tile.style.top = `${currentY}px`;
                 tile.style.width = `${itemWidth}px`;
                 tile.style.height = `${rowHeight}px`;
-                tile.style.backgroundColor = 'steelblue';
+                tile.style.backgroundColor = valueToColor(item.points);
                 tile.style.lineHeight = `${rowHeight}px`;
                 tile.style.textAlign = 'center';
                 tile.innerText = item.team;
                 tile.dataset.name = item.team;
                 tile.dataset.value = item.points;
-
-                tile.addEventListener('mouseover', (e) => {
-                    tooltip.style.display = 'block';
-                    tooltip.innerHTML = `Team: ${e.target.dataset.name}<br>Points: ${e.target.dataset.value}`;
-                    tooltip.style.left = `${e.pageX + 5}px`;
-                    tooltip.style.top = `${e.pageY - 28}px`;
-                });
-
-                tile.addEventListener('mouseout', () => {
-                    tooltip.style.display = 'none';
-                });
 
                 container.appendChild(tile);
 
@@ -89,18 +77,8 @@ function drawTreeMap(data) {
     drawRects(data, 0, 0, width, height);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function valueToColor(value) {
+    const maxValue = 100; // Valor máximo de exemplo
+    const ratio = value / maxValue;
+    return `rgb(${Math.floor(255 * (1 - ratio))}, ${Math.floor(255 * ratio)}, 0)`;
+}
